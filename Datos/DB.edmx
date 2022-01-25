@@ -1,0 +1,265 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="dbPreguntasFrecuentesModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="categoriaPreguntasFrecuentes">
+          <Key>
+            <PropertyRef Name="categoriaPreguntaFreID" />
+          </Key>
+          <Property Name="categoriaPreguntaFreID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="empleadoID" Type="int" />
+          <Property Name="nombreCategoria" Type="varchar" MaxLength="255" />
+        </EntityType>
+        <EntityType Name="Empleados">
+          <Key>
+            <PropertyRef Name="empleadoID" />
+          </Key>
+          <Property Name="empleadoID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Nombres" Type="varchar" MaxLength="50" />
+          <Property Name="Apellidos" Type="varchar" MaxLength="50" />
+          <Property Name="ApMaterno" Type="varchar" MaxLength="50" />
+          <Property Name="Edad" Type="int" />
+          <Property Name="address" Type="varchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="preguntasFrecuentes">
+          <Key>
+            <PropertyRef Name="preguntasFID" />
+          </Key>
+          <Property Name="preguntasFID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="presguntaFrecuente" Type="varchar" MaxLength="255" />
+          <Property Name="categoriaPreguntaFreID" Type="int" />
+        </EntityType>
+        <EntityType Name="Respuestas">
+          <Key>
+            <PropertyRef Name="respuestasID" />
+          </Key>
+          <Property Name="respuestasID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="preguntasFID" Type="int" />
+          <Property Name="respuestas" Type="varchar" MaxLength="255" />
+        </EntityType>
+        <Association Name="FK_categoriaPreguntasFrecuentes_Empleados">
+          <End Role="Empleados" Type="Self.Empleados" Multiplicity="0..1" />
+          <End Role="categoriaPreguntasFrecuentes" Type="Self.categoriaPreguntasFrecuentes" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Empleados">
+              <PropertyRef Name="empleadoID" />
+            </Principal>
+            <Dependent Role="categoriaPreguntasFrecuentes">
+              <PropertyRef Name="empleadoID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_preguntasFrecuentes_categoriaPreguntasFrecuentes">
+          <End Role="categoriaPreguntasFrecuentes" Type="Self.categoriaPreguntasFrecuentes" Multiplicity="0..1" />
+          <End Role="preguntasFrecuentes" Type="Self.preguntasFrecuentes" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="categoriaPreguntasFrecuentes">
+              <PropertyRef Name="categoriaPreguntaFreID" />
+            </Principal>
+            <Dependent Role="preguntasFrecuentes">
+              <PropertyRef Name="categoriaPreguntaFreID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Respuestas_preguntasFrecuentes">
+          <End Role="preguntasFrecuentes" Type="Self.preguntasFrecuentes" Multiplicity="0..1" />
+          <End Role="Respuestas" Type="Self.Respuestas" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="preguntasFrecuentes">
+              <PropertyRef Name="preguntasFID" />
+            </Principal>
+            <Dependent Role="Respuestas">
+              <PropertyRef Name="preguntasFID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="dbPreguntasFrecuentesModelStoreContainer">
+          <EntitySet Name="categoriaPreguntasFrecuentes" EntityType="Self.categoriaPreguntasFrecuentes" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Empleados" EntityType="Self.Empleados" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="preguntasFrecuentes" EntityType="Self.preguntasFrecuentes" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Respuestas" EntityType="Self.Respuestas" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_categoriaPreguntasFrecuentes_Empleados" Association="Self.FK_categoriaPreguntasFrecuentes_Empleados">
+            <End Role="Empleados" EntitySet="Empleados" />
+            <End Role="categoriaPreguntasFrecuentes" EntitySet="categoriaPreguntasFrecuentes" />
+          </AssociationSet>
+          <AssociationSet Name="FK_preguntasFrecuentes_categoriaPreguntasFrecuentes" Association="Self.FK_preguntasFrecuentes_categoriaPreguntasFrecuentes">
+            <End Role="categoriaPreguntasFrecuentes" EntitySet="categoriaPreguntasFrecuentes" />
+            <End Role="preguntasFrecuentes" EntitySet="preguntasFrecuentes" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Respuestas_preguntasFrecuentes" Association="Self.FK_Respuestas_preguntasFrecuentes">
+            <End Role="preguntasFrecuentes" EntitySet="preguntasFrecuentes" />
+            <End Role="Respuestas" EntitySet="Respuestas" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="dbPreguntasFrecuentesModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="categoriaPreguntasFrecuentes">
+          <Key>
+            <PropertyRef Name="categoriaPreguntaFreID" />
+          </Key>
+          <Property Name="categoriaPreguntaFreID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="empleadoID" Type="Int32" />
+          <Property Name="nombreCategoria" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Empleados" Relationship="Self.FK_categoriaPreguntasFrecuentes_Empleados" FromRole="categoriaPreguntasFrecuentes" ToRole="Empleados" />
+          <NavigationProperty Name="preguntasFrecuentes" Relationship="Self.FK_preguntasFrecuentes_categoriaPreguntasFrecuentes" FromRole="categoriaPreguntasFrecuentes" ToRole="preguntasFrecuentes" />
+        </EntityType>
+        <EntityType Name="Empleados">
+          <Key>
+            <PropertyRef Name="empleadoID" />
+          </Key>
+          <Property Name="empleadoID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Nombres" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Apellidos" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="ApMaterno" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Edad" Type="Int32" />
+          <Property Name="address" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="categoriaPreguntasFrecuentes" Relationship="Self.FK_categoriaPreguntasFrecuentes_Empleados" FromRole="Empleados" ToRole="categoriaPreguntasFrecuentes" />
+        </EntityType>
+        <EntityType Name="preguntasFrecuentes">
+          <Key>
+            <PropertyRef Name="preguntasFID" />
+          </Key>
+          <Property Name="preguntasFID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="presguntaFrecuente" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="categoriaPreguntaFreID" Type="Int32" />
+          <NavigationProperty Name="categoriaPreguntasFrecuentes" Relationship="Self.FK_preguntasFrecuentes_categoriaPreguntasFrecuentes" FromRole="preguntasFrecuentes" ToRole="categoriaPreguntasFrecuentes" />
+          <NavigationProperty Name="Respuestas" Relationship="Self.FK_Respuestas_preguntasFrecuentes" FromRole="preguntasFrecuentes" ToRole="Respuestas" />
+        </EntityType>
+        <EntityType Name="Respuestas">
+          <Key>
+            <PropertyRef Name="respuestasID" />
+          </Key>
+          <Property Name="respuestasID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="preguntasFID" Type="Int32" />
+          <Property Name="respuestas1" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="preguntasFrecuentes" Relationship="Self.FK_Respuestas_preguntasFrecuentes" FromRole="Respuestas" ToRole="preguntasFrecuentes" />
+        </EntityType>
+        <Association Name="FK_categoriaPreguntasFrecuentes_Empleados">
+          <End Role="Empleados" Type="Self.Empleados" Multiplicity="0..1" />
+          <End Role="categoriaPreguntasFrecuentes" Type="Self.categoriaPreguntasFrecuentes" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Empleados">
+              <PropertyRef Name="empleadoID" />
+            </Principal>
+            <Dependent Role="categoriaPreguntasFrecuentes">
+              <PropertyRef Name="empleadoID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_preguntasFrecuentes_categoriaPreguntasFrecuentes">
+          <End Role="categoriaPreguntasFrecuentes" Type="Self.categoriaPreguntasFrecuentes" Multiplicity="0..1" />
+          <End Role="preguntasFrecuentes" Type="Self.preguntasFrecuentes" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="categoriaPreguntasFrecuentes">
+              <PropertyRef Name="categoriaPreguntaFreID" />
+            </Principal>
+            <Dependent Role="preguntasFrecuentes">
+              <PropertyRef Name="categoriaPreguntaFreID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Respuestas_preguntasFrecuentes">
+          <End Role="preguntasFrecuentes" Type="Self.preguntasFrecuentes" Multiplicity="0..1" />
+          <End Role="Respuestas" Type="Self.Respuestas" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="preguntasFrecuentes">
+              <PropertyRef Name="preguntasFID" />
+            </Principal>
+            <Dependent Role="Respuestas">
+              <PropertyRef Name="preguntasFID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="dbPreguntasFrecuentesEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="categoriaPreguntasFrecuentes" EntityType="Self.categoriaPreguntasFrecuentes" />
+          <EntitySet Name="Empleados" EntityType="Self.Empleados" />
+          <EntitySet Name="preguntasFrecuentes" EntityType="Self.preguntasFrecuentes" />
+          <EntitySet Name="Respuestas" EntityType="Self.Respuestas" />
+          <AssociationSet Name="FK_categoriaPreguntasFrecuentes_Empleados" Association="Self.FK_categoriaPreguntasFrecuentes_Empleados">
+            <End Role="Empleados" EntitySet="Empleados" />
+            <End Role="categoriaPreguntasFrecuentes" EntitySet="categoriaPreguntasFrecuentes" />
+          </AssociationSet>
+          <AssociationSet Name="FK_preguntasFrecuentes_categoriaPreguntasFrecuentes" Association="Self.FK_preguntasFrecuentes_categoriaPreguntasFrecuentes">
+            <End Role="categoriaPreguntasFrecuentes" EntitySet="categoriaPreguntasFrecuentes" />
+            <End Role="preguntasFrecuentes" EntitySet="preguntasFrecuentes" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Respuestas_preguntasFrecuentes" Association="Self.FK_Respuestas_preguntasFrecuentes">
+            <End Role="preguntasFrecuentes" EntitySet="preguntasFrecuentes" />
+            <End Role="Respuestas" EntitySet="Respuestas" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="dbPreguntasFrecuentesModelStoreContainer" CdmEntityContainer="dbPreguntasFrecuentesEntities">
+          <EntitySetMapping Name="categoriaPreguntasFrecuentes">
+            <EntityTypeMapping TypeName="dbPreguntasFrecuentesModel.categoriaPreguntasFrecuentes">
+              <MappingFragment StoreEntitySet="categoriaPreguntasFrecuentes">
+                <ScalarProperty Name="categoriaPreguntaFreID" ColumnName="categoriaPreguntaFreID" />
+                <ScalarProperty Name="empleadoID" ColumnName="empleadoID" />
+                <ScalarProperty Name="nombreCategoria" ColumnName="nombreCategoria" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Empleados">
+            <EntityTypeMapping TypeName="dbPreguntasFrecuentesModel.Empleados">
+              <MappingFragment StoreEntitySet="Empleados">
+                <ScalarProperty Name="empleadoID" ColumnName="empleadoID" />
+                <ScalarProperty Name="Nombres" ColumnName="Nombres" />
+                <ScalarProperty Name="Apellidos" ColumnName="Apellidos" />
+                <ScalarProperty Name="ApMaterno" ColumnName="ApMaterno" />
+                <ScalarProperty Name="Edad" ColumnName="Edad" />
+                <ScalarProperty Name="address" ColumnName="address" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="preguntasFrecuentes">
+            <EntityTypeMapping TypeName="dbPreguntasFrecuentesModel.preguntasFrecuentes">
+              <MappingFragment StoreEntitySet="preguntasFrecuentes">
+                <ScalarProperty Name="preguntasFID" ColumnName="preguntasFID" />
+                <ScalarProperty Name="presguntaFrecuente" ColumnName="presguntaFrecuente" />
+                <ScalarProperty Name="categoriaPreguntaFreID" ColumnName="categoriaPreguntaFreID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Respuestas">
+            <EntityTypeMapping TypeName="dbPreguntasFrecuentesModel.Respuestas">
+              <MappingFragment StoreEntitySet="Respuestas">
+                <ScalarProperty Name="respuestasID" ColumnName="respuestasID" />
+                <ScalarProperty Name="preguntasFID" ColumnName="preguntasFID" />
+                <ScalarProperty Name="respuestas1" ColumnName="respuestas" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
